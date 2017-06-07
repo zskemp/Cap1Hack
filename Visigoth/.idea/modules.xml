@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Ina.iml" filepath="$PROJECT_DIR$/Ina.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Visigoth.iml" filepath="$PROJECT_DIR$/Visigoth.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
