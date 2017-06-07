@@ -63,6 +63,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
+    private EditText mBankAccountID;
     private View mProgressView;
     private View mLoginFormView;
 
@@ -85,6 +86,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 return false;
             }
         });
+
+        mBankAccountID = (EditText) findViewById(R.id.bankaccountID);
 
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
@@ -159,6 +162,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         // Store values at the time of the login attempt.
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
+        String accountID = mBankAccountID.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
@@ -189,7 +193,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
+            mAuthTask = new UserLoginTask(email, password, accountID);
             mAuthTask.execute((Void) null);
         }
     }
@@ -302,10 +306,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         private final String mEmail;
         private final String mPassword;
+        private final String mAccountID;
 
-        UserLoginTask(String email, String password) {
+        UserLoginTask(String email, String password, String accountID) {
             mEmail = email;
             mPassword = password;
+            mAccountID = accountID;
         }
 
         @Override
@@ -334,6 +340,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             SharedPreferences.Editor editor = settings.edit();
             editor.putString("username", mEmail);
             editor.putString("password", mPassword);
+            editor.putString("accountID", mAccountID);
 
             //After making the new account move to take a picture
             Intent intent = new Intent(LoginActivity.this, TakeAuthPicActivity.class);

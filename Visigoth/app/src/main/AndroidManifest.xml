@@ -29,7 +29,20 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login" />
-        <activity android:name=".TakeAuthPicActivity"></activity>
+        <activity android:name=".TakeAuthPicActivity" />
+        <activity
+            android:name=".HomeActivity"
+            android:label="@string/title_activity_home"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".PaymentRequestActivity"
+            android:label="@string/title_activity_payment_request"
+            android:parentActivityName=".HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.zrs.visigoth.HomeActivity" />
+        </activity>
     </application>
 
 </manifest>
