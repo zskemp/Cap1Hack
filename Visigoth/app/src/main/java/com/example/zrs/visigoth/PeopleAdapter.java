@@ -98,6 +98,8 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.ViewHolder
         });
     }
 
+    public String getSelected() {return peopleList.get(selectedPosition).getTitle();}
+
     @Override
     public int getItemCount() {
         return peopleList.size();

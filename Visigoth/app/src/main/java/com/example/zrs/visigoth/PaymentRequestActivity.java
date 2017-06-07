@@ -1,5 +1,6 @@
 package com.example.zrs.visigoth;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -9,6 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.support.v7.widget.DividerItemDecoration;
+import android.widget.Button;
+import android.widget.EditText;
 
 import java.util.ArrayList;
 
@@ -19,6 +22,8 @@ public class PaymentRequestActivity extends AppCompatActivity {
     ArrayList<People> list;
     RecyclerView rvPeopleList;
 
+    EditText mAmount;
+    Button mSubmit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +34,7 @@ public class PaymentRequestActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        mAmount = (EditText) findViewById(R.id.moneyAmount);
 
         // Lookup the recyclerview in activity layout
         rvPeopleList = (RecyclerView) findViewById(R.id.recycler_view);
@@ -41,11 +47,25 @@ public class PaymentRequestActivity extends AppCompatActivity {
         // Initialize bucketlist
         list = preparePeopleList();
         // Create adapter passing in the sample user data
-        PeopleAdapter adapter = new PeopleAdapter(this.getApplicationContext(), list);
+        final PeopleAdapter adapter = new PeopleAdapter(this.getApplicationContext(), list);
         // Attach the adapter to the recyclerview to populate items
         rvPeopleList.setAdapter(adapter);
         // Set layout manager to position the items
         rvPeopleList.setLayoutManager(rvLayoutManager);
+
+        mSubmit = (Button) findViewById(R.id.selectPayer);
+        mSubmit.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Perform action on click
+                String payee = adapter.getSelected();
+                String amount = mAmount.getText().toString();
+
+                Intent intent = new Intent(PaymentRequestActivity.this, AuthPaymentActivity.class);
+                intent.putExtra("PERSON_TO_PAY", payee);
+                intent.putExtra("AMOUNT", amount);
+                startActivity(intent);
+            }
+        });
     }
 
     //Here is where we prepare the Glossary Data
