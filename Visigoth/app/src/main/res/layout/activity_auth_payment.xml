@@ -20,4 +20,55 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="?android:dividerHorizontal"
+        android:showDividers="middle"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/cameraView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".7"
+            android:orientation="vertical">
+
+            <!-- PUT THE CAMERA VIEW HERE! -->
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/fingerprintView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".2"
+            android:orientation="horizontal"
+            android:divider="?android:dividerHorizontal"
+            android:showDividers="middle">
+
+            <!-- PUT THE FINGER PRINT THINGY VIEW HERE! -->
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/submitButtonView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".1"
+            android:orientation="vertical">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/authenticateBtn"
+                android:text="SUBMIT"
+                android:textStyle="bold"/>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
 </android.support.design.widget.CoordinatorLayout>

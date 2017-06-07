@@ -78,7 +78,14 @@ public class PaymentRequestActivity extends AppCompatActivity {
         glossaryList.add(new People("Johnny3"));
         glossaryList.add(new People("Johnny4"));
         glossaryList.add(new People("Johnny5"));
-        glossaryList.add(new People("Johnny6"));
+        glossaryList.add(new People("Johnny7"));
+        glossaryList.add(new People("Johnny8"));
+        glossaryList.add(new People("Johnny9"));
+        glossaryList.add(new People("Johnny9"));
+        glossaryList.add(new People("Johnny9"));
+        glossaryList.add(new People("Johnny9"));
+        glossaryList.add(new People("Johnny10"));
+
 
         return glossaryList;
     }
