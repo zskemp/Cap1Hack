@@ -16,4 +16,6 @@
     </string>
     <string name="title_activity_home">Home</string>
     <string name="title_activity_payment_request">PaymentRequestActivity</string>
+    <string name="title_activity_auth_payment">AuthPaymentActivity</string>
+    <string name="title_activity_take_auth_voice">TakeAuthVoiceActivity</string>
 </resources>
