@@ -88,7 +88,7 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.ViewHolder
         holder.title.setText(term.getTitle());
 
         if(selectedPosition==position)
-            holder.itemView.setBackgroundColor(Color.parseColor("#000000"));
+            holder.itemView.setBackgroundColor(Color.parseColor("#DCDCDC"));
         else
             holder.itemView.setBackgroundColor(Color.parseColor("#ffffff"));
 

@@ -184,7 +184,7 @@ public class AuthPaymentActivity extends AppCompatActivity {
                 Bitmap im2 = decodeSampledBitmapFromResource(getResources(), R.drawable.zach, 100, 100);
                 mBitmap0 = im2;
                 break;
-            case "Ben":
+            case "ben":
                 pic0.setImageBitmap(decodeSampledBitmapFromResource(getResources(), R.drawable.ben, 100, 100));
                 Bitmap im3 = decodeSampledBitmapFromResource(getResources(), R.drawable.ben, 100, 100);
                 mBitmap0 = im3;
@@ -272,20 +272,22 @@ public class AuthPaymentActivity extends AppCompatActivity {
         }
         @Override
         protected void onPostExecute(VerifyResult result) {
-            if (result != null) {
-            }
-
-            // Show the result on screen when verification is done.
-            if(result.isIdentical) {
-                //IF API call comes back positive, do this
-                Intent intent = new Intent(AuthPaymentActivity.this, HomeActivity.class);
-                startActivity(intent);
-                Toast.makeText(getApplicationContext(), "Payment Transaction Successful", Toast.LENGTH_SHORT).show();
+            if (result == null) {
+                Toast.makeText(getApplicationContext(), "ERROR AUTHENTICATING \n Please see a developer", Toast.LENGTH_SHORT).show();
             } else {
-                //If API call comes back negative
-                finish();
-                startActivity(getIntent());
-                Toast.makeText(getApplicationContext(), "Authentication Failed! \n Please Try Again :)", Toast.LENGTH_SHORT).show();
+                // Show the result on screen when verification is done.
+                Log.i("result", result.toString());
+                if (result.isIdentical) {
+                    //IF API call comes back positive, do this
+                    Intent intent = new Intent(AuthPaymentActivity.this, HomeActivity.class);
+                    startActivity(intent);
+                    Toast.makeText(getApplicationContext(), "Payment Transaction Successful", Toast.LENGTH_SHORT).show();
+                } else {
+                    //If API call comes back negative
+                    finish();
+                    startActivity(getIntent());
+                    Toast.makeText(getApplicationContext(), "Authentication Failed! \n Please Try Again :)", Toast.LENGTH_SHORT).show();
+                }
             }
         }
     }

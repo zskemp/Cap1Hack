@@ -344,7 +344,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             verified_user = true;
                         }
                         else{
-                            Toast toast = Toast.makeText(getApplicationContext(), snapshot.child(mEmail).child("password").getValue().toString(), 4);
+                            Toast toast = Toast.makeText(getApplicationContext(), snapshot.child(mEmail).child("password").getValue().toString(), Toast.LENGTH_SHORT);
                             toast.show();
                         }
                     }
