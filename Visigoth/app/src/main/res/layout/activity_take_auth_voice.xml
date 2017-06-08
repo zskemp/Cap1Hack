@@ -20,12 +20,28 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:onClick="dispatchToHome"
-        android:text="Button" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <RecordButton
+            android:id="@+id/rec_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:onClick="dispatchToHome"
+            android:text="Record" />
+
+        <PLayButton
+            android:id="@+id/play_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:onClick="dispatchToHome"
+            android:text="Play" />
+    </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>
