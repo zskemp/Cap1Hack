@@ -64,7 +64,7 @@ public class HomeActivity extends AppCompatActivity {
         transactions.add(new Transaction("John", "$50.49", R.drawable.money));
         transactions.add(new Transaction("Zach", "$44.32", R.drawable.receipt));
         transactions.add(new Transaction("Kyle", "$2.32", R.drawable.money));
-        transactions.add(new Transaction("Ben", "$145.65", R.drawable.receipt));
+        transactions.add(new Transaction("ben", "$145.65", R.drawable.receipt));
         transactions.add(new Transaction("Riyu", "$12.00", R.drawable.money));
 
 

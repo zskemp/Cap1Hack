@@ -1,6 +1,7 @@
 package com.example.zrs.visigoth;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
@@ -79,13 +80,31 @@ public class PaymentRequestActivity extends AppCompatActivity {
                 mSubmit.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
                         // Perform action on click
-                        String payee = adapter.getSelected();
-                        String amount = mAmount.getText().toString();
+                        final String payee = adapter.getSelected();
+                        final String amount = mAmount.getText().toString();
 
-                        Intent intent = new Intent(PaymentRequestActivity.this, AuthPaymentActivity.class);
-                        intent.putExtra("PERSON_TO_PAY", payee);
-                        intent.putExtra("AMOUNT", amount);
-                        startActivity(intent);
+                        mDatabase = FirebaseDatabase.getInstance().getReference();
+                        DatabaseReference users = mDatabase.child("users");
+
+                        //one time check of the mDatabase object
+                        users.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot snapshot) {
+                                String id = snapshot.child(payee).child("c1id").getValue().toString();
+
+                                Intent intent = new Intent(PaymentRequestActivity.this, AuthPaymentActivity.class);
+                                intent.putExtra("PERSON_TO_PAY", payee);
+                                intent.putExtra("AMOUNT", amount);
+                                intent.putExtra("ID", id);
+                                startActivity(intent);
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                Toast toast = Toast.makeText(getApplicationContext(), "Server failed to return", Toast.LENGTH_SHORT);
+                                toast.show();
+                            }
+                        });
                     }
                 });
             }

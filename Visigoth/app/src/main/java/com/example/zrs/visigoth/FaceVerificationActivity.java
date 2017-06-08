@@ -271,7 +271,7 @@ public class FaceVerificationActivity extends AppCompatActivity {
 
         button.setEnabled(isEnabled);
 
-//        Button viewLog = (Button) findViewById(R.id.view_log);
+//    Button viewLog = (Button) findViewById(R.id.view_log);
 //        viewLog.setEnabled(isEnabled);
     }
 
