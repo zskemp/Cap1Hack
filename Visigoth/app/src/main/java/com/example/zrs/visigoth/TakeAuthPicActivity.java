@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ImageFormat;
@@ -48,6 +49,7 @@ import android.widget.Toast;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -108,21 +110,6 @@ public class TakeAuthPicActivity extends AppCompatActivity {
             }
         });
         detectionProgressDialog = new ProgressDialog(this);
-/*
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Button button1 = (Button)findViewById(R.id.btn_takepicture);
-        button1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent gallIntent = new Intent(Intent.ACTION_GET_CONTENT);
-                gallIntent.setType("image/*");
-                startActivityForResult(Intent.createChooser(gallIntent, "Select Picture"), PICK_IMAGE);
-            }
-        });
-*/
-
-
     }
 
     TextureView.SurfaceTextureListener textureListener = new TextureView.SurfaceTextureListener() {
@@ -189,6 +176,7 @@ public class TakeAuthPicActivity extends AppCompatActivity {
             Log.e(TAG, "cameraDevice is null");
             return;
         }
+
         CameraManager manager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
         try {
             CameraCharacteristics characteristics = manager.getCameraCharacteristics(cameraDevice.getId());
@@ -238,6 +226,11 @@ public class TakeAuthPicActivity extends AppCompatActivity {
                     try {
                         output = new FileOutputStream(file);
                         output.write(bytes);
+
+                        FileInputStream fileInputStream = new FileInputStream(file);
+
+                        detectAndFrame(BitmapFactory.decodeStream(fileInputStream));
+
                     } finally {
                         if (null != output) {
                             output.close();
@@ -251,8 +244,6 @@ public class TakeAuthPicActivity extends AppCompatActivity {
                 public void onCaptureCompleted(CameraCaptureSession session, CaptureRequest request, TotalCaptureResult result) {
                     super.onCaptureCompleted(session, request, result);
                     //API Call
-
-
 
                     Toast.makeText(TakeAuthPicActivity.this, "Saved:" + file, Toast.LENGTH_SHORT).show();
                     createCameraPreview();
