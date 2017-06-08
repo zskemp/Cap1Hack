@@ -689,10 +689,10 @@ public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
         //Log.i("zzz",id);
         //APIInterface apiService = APIClient.getClient().create(APIInterface.class);
         //Call<Example> call = apiService.transfer(medium, id, amount, date, description);
-        String url = "http://api.reimaginebanking.com/accounts/" + accountID +"/transfers?key=67d9a238a69baa7daee2a3a22bd1ee75";
+        String url = "http://api.reimaginebanking.com/accounts/" + mID +"/transfers?key=67d9a238a69baa7daee2a3a22bd1ee75";
         String json = "{" +
                 "  \"medium\": \"balance\"," +
-                "  \"payee_id\": \"" + mID + "\"," +
+                "  \"payee_id\": \"" + accountID + "\"," +
                 "  \"amount\": " + mAmount +"," +
                 "  \"transaction_date\": \"2017-06-08\"," +
                 "  \"description\": \"string\"" +
