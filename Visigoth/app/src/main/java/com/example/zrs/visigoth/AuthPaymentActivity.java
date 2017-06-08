@@ -99,6 +99,7 @@ public class AuthPaymentActivity extends AppCompatActivity {
 
     private String mPayee;
     private String mAmount;
+    private String mID;
 
     private ImageView pic0;
 
@@ -137,13 +138,16 @@ public class AuthPaymentActivity extends AppCompatActivity {
             if(extras == null) {
                 mPayee= null;
                 mAmount= null;
+                mID = null;
             } else {
                 mPayee= extras.getString("PERSON_TO_PAY");
                 mAmount= extras.getString("AMOUNT");
+                mID= extras.getString("ID");
             }
         } else {
             mPayee = (String) savedInstanceState.getSerializable("PERSON_TO_PAY");
             mAmount = (String) savedInstanceState.getSerializable("AMOUNT");
+            mID = (String) savedInstanceState.getSerializable("ID");
         }
 
         mSubmit = (Button) findViewById(R.id.authenticateBtn);
@@ -685,7 +689,7 @@ public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
         //Log.i("zzz",id);
         //APIInterface apiService = APIClient.getClient().create(APIInterface.class);
         //Call<Example> call = apiService.transfer(medium, id, amount, date, description);
-        String url = "http://api.reimaginebanking.com/accounts/" + id +"/transfers?key=67d9a238a69baa7daee2a3a22bd1ee75";
+        String url = "http://api.reimaginebanking.com/accounts/" + mID +"/transfers?key=67d9a238a69baa7daee2a3a22bd1ee75";
         String json = "{" +
                 "  \"medium\": \"balance\"," +
                 "  \"payee_id\": \"" + accountID + "\"," +
@@ -695,6 +699,7 @@ public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
                 "}";
 
         Log.i("zzz",json);
+        Log.i("zzz",accountID);
 
         new RetrieveFeedTask().execute(url, json);
 

@@ -60,6 +60,7 @@ public class PaymentRequestActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
         mAmount = (EditText) findViewById(R.id.moneyAmount);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -104,6 +105,7 @@ public class PaymentRequestActivity extends AppCompatActivity {
                             @Override
                             public void onDataChange(DataSnapshot snapshot) {
                                 id = snapshot.child(payee).child("c1id").getValue().toString();
+
 
                                 Intent intent = new Intent(PaymentRequestActivity.this, AuthPaymentActivity.class);
                                 intent.putExtra("PERSON_TO_PAY", payee);
