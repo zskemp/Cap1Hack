@@ -150,7 +150,7 @@ public class AuthPaymentActivity extends AppCompatActivity {
         mSubmit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Perform API call to authenticate
-                verify(v);
+                //verify(v);
                 makeTransation();
             }
         });
@@ -698,6 +698,10 @@ public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
 
         new RetrieveFeedTask().execute(url, json);
 
+        Intent intent = new Intent(AuthPaymentActivity.this, HomeActivity.class);
+        intent.putExtra("addanother", "yes");
+        startActivity(intent);
+
 
     }
 
@@ -725,11 +729,14 @@ public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
                 e.printStackTrace();
             }
             return null;
+
         }
 
         protected void onPostExecute() {
             // TODO: check this.exception
             // TODO: do something with the feed
+            Intent intent = new Intent(AuthPaymentActivity.this, HomeActivity.class);
+            startActivity(intent);
         }
     }
 }

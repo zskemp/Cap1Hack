@@ -41,13 +41,6 @@ public class APIClient_Get {
         Response response = client.newCall(request).execute();
         if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
         String responseString = response.body().string();
-        JSONArray jsonarray = new JSONArray(responseString);
-        for (int i = 0; i < jsonarray.length(); i++) {
-            JSONObject jsonobject = jsonarray.getJSONObject(i);
-            String payer = jsonobject.getString("payer_id");
-            String amount = jsonobject.getString("amount");
-            System.out.println(payer + "   " + amount);
-        }
 //        HashMap<String,String> map = new Gson().fromJson(responseString, new TypeToken<HashMap<String, String>>(){}.getType());
 
         return responseString;

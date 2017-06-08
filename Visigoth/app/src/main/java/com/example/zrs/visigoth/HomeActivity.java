@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.health.SystemHealthManager;
+import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
@@ -14,6 +15,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -28,16 +30,20 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.StringTokenizer;
 
 public class HomeActivity extends AppCompatActivity {
 
     public static ArrayList<Transaction> transactions;
 //    private ArrayList<Transaction> transactions;
-    private DatabaseReference mDatabase;
-    String transaction_name;
+    private static DatabaseReference mDatabase;
+    static String transaction_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +51,14 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+//        if (savedInstanceState == null) {
+//            Bundle extras = getIntent().getExtras();
+//            if(extras == null) {;
+//            } else {
+//                transactions.add(new Transaction("John", "$20.00", R.drawable.money));
+//            }
+//        }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -77,21 +91,14 @@ public class HomeActivity extends AppCompatActivity {
         // ToDo: Change temp data with data from API call
         String url = "http://api.reimaginebanking.com/accounts/5938c8f1ceb8abe2425178e1/transfers?key=67d9a238a69baa7daee2a3a22bd1ee75";
 
-       // String url = "http://api.reimaginebanking.com/accounts/5938c8f1ceb8abe2425178e1/transfers?key=67d9a238a69baa7daee2a3a22bd1ee75";
-        String json = "{" +
-                "  \"medium\": \"balance\"," +
-                "  \"payee_id\": \"5938c93bceb8abe2425178e5\"," +
-                "  \"amount\": 3," +
-                "  \"transaction_date\": \"2017-06-08\"," +
-                "  \"description\": \"string\"" +
-                "}";
 
-        new RetrieveFeedTask().execute(url);
+        //new RetrieveFeedTask().execute(url);
+
         //FAKE DATA: USE API CALL
         transactions.add(new Transaction("John", "$50.49", R.drawable.money));
-        transactions.add(new Transaction("Zach", "$44.32", R.drawable.receipt));
+        transactions.add(new Transaction("Amber", "$44.32", R.drawable.receipt));
         transactions.add(new Transaction("Kyle", "$2.32", R.drawable.money));
-        transactions.add(new Transaction("ben", "$145.65", R.drawable.receipt));
+        transactions.add(new Transaction("Ben", "$145.65", R.drawable.receipt));
         transactions.add(new Transaction("Riyu", "$12.00", R.drawable.money));
 
 
@@ -116,7 +123,22 @@ public class HomeActivity extends AppCompatActivity {
 
             try {
                 String response = apiClient.run(urls[0]);
-                System.out.print(response);
+                JSONArray jsonarray = new JSONArray(response);
+                for (int i = 0; i < jsonarray.length(); i++) {
+                    JSONObject jsonobject = jsonarray.getJSONObject(i);
+                    String payer = jsonobject.getString("payer_id");
+                    String amount = jsonobject.getString("amount");
+
+                    String name = capitalone_id_to_name(payer);
+                    System.out.println(name);
+
+                    if (i % 2 == 0) {
+                        transactions.add(new Transaction(name, "$" + amount, R.drawable.money));
+                    } else {
+                        transactions.add(new Transaction(name, "$" + amount, R.drawable.receipt));
+                    }
+                    System.out.println(payer + "   " + amount);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -129,7 +151,7 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    public String capitalone_id_to_name(String id) {
+    public static String capitalone_id_to_name(String id) {
         final String capital_id = id;
         mDatabase = FirebaseDatabase.getInstance().getReference();
         transaction_name = "default name";
@@ -140,9 +162,11 @@ public class HomeActivity extends AppCompatActivity {
         users.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-
+                Log.i("what", "c1id: " + snapshot.getChildren());
                 for(DataSnapshot postSnapshot : snapshot.getChildren()){
-                    if (postSnapshot.child("c1id").equals(capital_id)){
+                    Log.i("", "NAme: " + postSnapshot.child("name").getValue());
+                    Log.i("", "C1id: " + postSnapshot.child("c1id").getValue());
+                    if (postSnapshot.child("c1id").getValue().toString().equals(capital_id)){
                         transaction_name = postSnapshot.getValue().toString();
                     }
                 }
@@ -151,11 +175,9 @@ public class HomeActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Toast toast = Toast.makeText(getApplicationContext(), "Server failed to return", Toast.LENGTH_SHORT);
-                toast.show();
+                Log.i("", "Did not connect to backend");
             }
         });
-
         return transaction_name;
     }
 }
