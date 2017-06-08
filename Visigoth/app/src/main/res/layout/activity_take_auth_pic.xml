@@ -19,6 +19,6 @@
         android:layout_centerHorizontal="true"
         android:background="@color/colorPrimary"
         android:text="Take Authentication Picture"
-        android:textColor="@color/colorAccent"
+        android:textColor="#FFF"
         android:textSize="24sp"/>
 </RelativeLayout>

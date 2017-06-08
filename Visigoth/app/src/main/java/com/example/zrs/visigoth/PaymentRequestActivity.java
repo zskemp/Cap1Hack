@@ -36,6 +36,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import retrofit2.Call;
 
+import static com.example.zrs.visigoth.SplashScreen.PREFS_NAME;
 import static java.security.AccessController.getContext;
 
 public class PaymentRequestActivity extends AppCompatActivity {
@@ -108,7 +109,7 @@ public class PaymentRequestActivity extends AppCompatActivity {
                                 intent.putExtra("PERSON_TO_PAY", payee);
                                 intent.putExtra("AMOUNT", amount);
                                 intent.putExtra("ID", id);
-                                makeTransation();
+                                //makeTransation();
                                 startActivity(intent);
                             }
 
@@ -132,24 +133,27 @@ public class PaymentRequestActivity extends AppCompatActivity {
         });
 
     }
-    public void makeTransation(){
+    /*public void makeTransation(){
         String medium = "medium";
         String date = "2017-06-08";
         String description = "description";
 
-        //SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-        //String accountID = settings.getString("accountID", "");
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        String accountID = settings.getString("accountID", "");
+
         //Log.i("zzz",id);
         //APIInterface apiService = APIClient.getClient().create(APIInterface.class);
         //Call<Example> call = apiService.transfer(medium, id, amount, date, description);
-        String url = "http://api.reimaginebanking.com/accounts/5938c8f1ceb8abe2425178e1/transfers?key=67d9a238a69baa7daee2a3a22bd1ee75";
+        String url = "http://api.reimaginebanking.com/accounts/" + id +"/transfers?key=67d9a238a69baa7daee2a3a22bd1ee75";
         String json = "{" +
                 "  \"medium\": \"balance\"," +
-                "  \"payee_id\": \"5938c93bceb8abe2425178e5\"," +
-                "  \"amount\": 3," +
+                "  \"payee_id\": \"" + accountID + "\"," +
+                "  \"amount\": " + amount +"," +
                 "  \"transaction_date\": \"2017-06-08\"," +
                 "  \"description\": \"string\"" +
                 "}";
+
+        Log.i("zzz",json);
 
         new RetrieveFeedTask().execute(url, json);
 
@@ -158,9 +162,11 @@ public class PaymentRequestActivity extends AppCompatActivity {
 
     class RetrieveFeedTask extends AsyncTask<String, String, Void> {
 
+
+
         private Exception exception;
 
-        String url = "http://api.reimaginebanking.com/accounts/" + "s5938c8f1ceb8abe2425178e1" +"/transfers?key=67d9a238a69baa7daee2a3a22bd1ee75";
+        String url = "http://api.reimaginebanking.com/accounts/" + id +"/transfers?key=67d9a238a69baa7daee2a3a22bd1ee75";
         String json = "{" +
                 "  \"medium\": \"balance\"," +
                 "  \"payee_id\": \"5938c93bceb8abe2425178e5\"," +
@@ -184,5 +190,5 @@ public class PaymentRequestActivity extends AppCompatActivity {
             // TODO: check this.exception
             // TODO: do something with the feed
         }
-    }
+    }*/
 }

@@ -86,7 +86,7 @@
             android:id="@+id/selectPayer"
             android:background="@color/colorPrimary"
             android:text="SELECT"
-            android:textColor="@color/colorAccent"
+            android:textColor="#FFF"
             android:textSize="26sp" />
 
 

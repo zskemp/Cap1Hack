@@ -3,6 +3,7 @@ package com.example.zrs.visigoth;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.health.SystemHealthManager;
 import android.support.design.widget.FloatingActionButton;
@@ -19,13 +20,24 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class HomeActivity extends AppCompatActivity {
 
     public static ArrayList<Transaction> transactions;
+//    private ArrayList<Transaction> transactions;
+    private DatabaseReference mDatabase;
+    String transaction_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +102,7 @@ public class HomeActivity extends AppCompatActivity {
 
         private Exception exception;
 
-        String url = "http://api.reimaginebanking.com/accounts/" + "s5938c8f1ceb8abe2425178e1" +"/transfers?key=67d9a238a69baa7daee2a3a22bd1ee75";
+        String url = "http://api.reimaginebanking.com/accounts/" + "s5938c8f1ceb8abe2425178e1" + "/transfers?key=67d9a238a69baa7daee2a3a22bd1ee75";
         String json = "{" +
                 "  \"medium\": \"balance\"," +
                 "  \"payee_id\": \"5938c93bceb8abe2425178e5\"," +
@@ -117,4 +129,33 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
+    public String capitalone_id_to_name(String id) {
+        final String capital_id = id;
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        transaction_name = "default name";
+
+        DatabaseReference users = mDatabase.child("users");
+
+        //one time check of the mDatabase object
+        users.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+
+                for(DataSnapshot postSnapshot : snapshot.getChildren()){
+                    if (postSnapshot.child("c1id").equals(capital_id)){
+                        transaction_name = postSnapshot.getValue().toString();
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast toast = Toast.makeText(getApplicationContext(), "Server failed to return", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
+
+        return transaction_name;
+    }
 }
