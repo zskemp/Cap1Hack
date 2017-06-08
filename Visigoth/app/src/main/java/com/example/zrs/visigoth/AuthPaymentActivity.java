@@ -107,6 +107,9 @@ public class AuthPaymentActivity extends AppCompatActivity {
     // Flag to indicate which task is to be performed.
     private static final int REQUEST_SELECT_IMAGE_0 = 0;
 
+    private FaceServiceClient faceServiceClient =
+            new FaceServiceRestClient("your subscription key");
+    ??
     // The IDs of the two faces to be verified.
     private UUID mFaceId0;
     private UUID mFaceId1;
