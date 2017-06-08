@@ -184,33 +184,37 @@ public class AuthPaymentActivity extends AppCompatActivity {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
 
-        switch (mPayee) {
-            case "Zach":
-                pic0.setImageBitmap(decodeSampledBitmapFromResource(getResources(), R.drawable.zach, 100, 100));
-                Bitmap im1 = decodeSampledBitmapFromResource(getResources(), R.drawable.zach, 100, 100);
-                mBitmap0 = im1;
-                break;
-            case "Kyle":
-                pic0.setImageBitmap(decodeSampledBitmapFromResource(getResources(), R.drawable.zach, 100, 100));
-                Bitmap im2 = decodeSampledBitmapFromResource(getResources(), R.drawable.zach, 100, 100);
-                mBitmap0 = im2;
-                break;
-            case "ben":
-                pic0.setImageBitmap(decodeSampledBitmapFromResource(getResources(), R.drawable.ben, 100, 100));
-                Bitmap im3 = decodeSampledBitmapFromResource(getResources(), R.drawable.ben, 100, 100);
-                mBitmap0 = im3;
-                break;
-            case "Riyu":
-                pic0.setImageBitmap(decodeSampledBitmapFromResource(getResources(), R.drawable.riyu, 100, 100));
-                Bitmap im4 = decodeSampledBitmapFromResource(getResources(), R.drawable.riyu, 100, 100);
-                mBitmap0 = im4;
-                break;
-            default:
-                pic0.setImageBitmap(decodeSampledBitmapFromResource(getResources(), R.drawable.zach, 100, 100));
-                Bitmap im5 = decodeSampledBitmapFromResource(getResources(), R.drawable.zach, 100, 100);
-                mBitmap0 = im5;
-                break;
-        }
+        pic0.setImageBitmap(decodeSampledBitmapFromResource(getResources(), R.drawable.mic, 100, 100));
+
+
+
+//        switch (mPayee) {
+//            case "Zach":
+//                pic0.setImageBitmap(decodeSampledBitmapFromResource(getResources(), R.drawable.zach, 100, 100));
+//                Bitmap im1 = decodeSampledBitmapFromResource(getResources(), R.drawable.zach, 100, 100);
+//                mBitmap0 = im1;
+//                break;
+//            case "Kyle":
+//                pic0.setImageBitmap(decodeSampledBitmapFromResource(getResources(), R.drawable.zach, 100, 100));
+//                Bitmap im2 = decodeSampledBitmapFromResource(getResources(), R.drawable.zach, 100, 100);
+//                mBitmap0 = im2;
+//                break;
+//            case "ben":
+//                pic0.setImageBitmap(decodeSampledBitmapFromResource(getResources(), R.drawable.ben, 100, 100));
+//                Bitmap im3 = decodeSampledBitmapFromResource(getResources(), R.drawable.ben, 100, 100);
+//                mBitmap0 = im3;
+//                break;
+//            case "Riyu":
+//                pic0.setImageBitmap(decodeSampledBitmapFromResource(getResources(), R.drawable.riyu, 100, 100));
+//                Bitmap im4 = decodeSampledBitmapFromResource(getResources(), R.drawable.riyu, 100, 100);
+//                mBitmap0 = im4;
+//                break;
+//            default:
+//                pic0.setImageBitmap(decodeSampledBitmapFromResource(getResources(), R.drawable.mic, 100, 100));
+//                Bitmap im5 = decodeSampledBitmapFromResource(getResources(), R.drawable.zach, 100, 100);
+//                mBitmap0 = im5;
+//                break;
+//        }
 
         //pic0.setImageBitmap(mBitmap0);
 //        pic0.setImageBitmap(decodeSampledBitmapFromResource(getResources(), R.drawable.zach, 100, 100));
