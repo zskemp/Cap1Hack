@@ -4,6 +4,7 @@ import android.*;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -64,7 +65,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import retrofit2.Call;
+
 public class AuthPaymentActivity extends AppCompatActivity {
+    public static final String PREFS_NAME = "CoreSkillsPrefsFile";
 
     private static final String TAG = "TakeAuthPicActivity";
     private Button takePictureButton;
@@ -140,6 +144,7 @@ public class AuthPaymentActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Perform API call to authenticate
                 verify(v);
+                makeTransation();
             }
         });
 
@@ -179,9 +184,9 @@ public class AuthPaymentActivity extends AppCompatActivity {
                 Bitmap im2 = decodeSampledBitmapFromResource(getResources(), R.drawable.zach, 100, 100);
                 mBitmap0 = im2;
                 break;
-            case "Ben":
-                pic0.setImageBitmap(decodeSampledBitmapFromResource(getResources(), R.drawable.zach, 100, 100));
-                Bitmap im3 = decodeSampledBitmapFromResource(getResources(), R.drawable.zach, 100, 100);
+            case "ben":
+                pic0.setImageBitmap(decodeSampledBitmapFromResource(getResources(), R.drawable.ben, 100, 100));
+                Bitmap im3 = decodeSampledBitmapFromResource(getResources(), R.drawable.ben, 100, 100);
                 mBitmap0 = im3;
                 break;
             case "Riyu":
@@ -267,20 +272,22 @@ public class AuthPaymentActivity extends AppCompatActivity {
         }
         @Override
         protected void onPostExecute(VerifyResult result) {
-            if (result != null) {
-            }
-
-            // Show the result on screen when verification is done.
-            if(result.isIdentical) {
-                //IF API call comes back positive, do this
-                Intent intent = new Intent(AuthPaymentActivity.this, HomeActivity.class);
-                startActivity(intent);
-                Toast.makeText(getApplicationContext(), "Payment Transaction Successful", Toast.LENGTH_SHORT).show();
+            if (result == null) {
+                Toast.makeText(getApplicationContext(), "ERROR AUTHENTICATING \n Please see a developer", Toast.LENGTH_SHORT).show();
             } else {
-                //If API call comes back negative
-                finish();
-                startActivity(getIntent());
-                Toast.makeText(getApplicationContext(), "Authentication Failed! \n Please Try Again :)", Toast.LENGTH_SHORT).show();
+                // Show the result on screen when verification is done.
+                Log.i("result", result.toString());
+                if (result.isIdentical) {
+                    //IF API call comes back positive, do this
+                    Intent intent = new Intent(AuthPaymentActivity.this, HomeActivity.class);
+                    startActivity(intent);
+                    Toast.makeText(getApplicationContext(), "Payment Transaction Successful", Toast.LENGTH_SHORT).show();
+                } else {
+                    //If API call comes back negative
+                    finish();
+                    startActivity(getIntent());
+                    Toast.makeText(getApplicationContext(), "Authentication Failed! \n Please Try Again :)", Toast.LENGTH_SHORT).show();
+                }
             }
         }
     }
@@ -658,5 +665,13 @@ public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
             }
         }
         return inSampleSize;
+    }
+
+    public void makeTransation(){
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        String accountID = settings.getString("accountID", "");
+        Log.i("zzz",accountID);
+        APIInterface apiService = APIClient.getClient(accountID).create(APIInterface.class);
+        Call<Example> call = apiService.transfer("medium", mPayee, mAmount, "2017-06-08", "description");
     }
 }

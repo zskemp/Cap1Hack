@@ -77,6 +77,12 @@ public class TakeAuthPicActivity extends AppCompatActivity {
         textureView = (TextureView) findViewById(R.id.texture);
         assert textureView != null;
         textureView.setSurfaceTextureListener(textureListener);
+        textureView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                takePicture();
+            }
+        });
         takePictureButton = (Button) findViewById(R.id.btn_takepicture);
         assert takePictureButton != null;
         takePictureButton.setOnClickListener(new View.OnClickListener() {
@@ -221,7 +227,7 @@ public class TakeAuthPicActivity extends AppCompatActivity {
                     Toast.makeText(TakeAuthPicActivity.this, "Saved:" + file, Toast.LENGTH_SHORT).show();
                     //createCameraPreview();
                     //Move to next thing
-                    Intent intent = new Intent(TakeAuthPicActivity.this, TakeAuthVoiceActivity.class);
+                    Intent intent = new Intent(TakeAuthPicActivity.this, HomeActivity.class);
                     startActivity(intent);
                 }
             };

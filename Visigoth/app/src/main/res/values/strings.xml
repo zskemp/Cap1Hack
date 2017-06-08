@@ -17,9 +17,9 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-    <string name="title_activity_home">Home</string>
-    <string name="title_activity_payment_request">PaymentRequestActivity</string>
-    <string name="title_activity_auth_payment">AuthPaymentActivity</string>
+    <string name="title_activity_home">Transaction History</string>
+    <string name="title_activity_payment_request">Payment</string>
+    <string name="title_activity_auth_payment">Authorize Payment</string>
     <string name="title_activity_take_auth_voice">TakeAuthVoiceActivity</string>
     <string name="title_activity_face_verification">FaceVerification</string>
 </resources>
