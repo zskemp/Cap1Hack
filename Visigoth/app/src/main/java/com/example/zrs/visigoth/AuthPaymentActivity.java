@@ -67,6 +67,9 @@ import java.util.UUID;
 
 import retrofit2.Call;
 
+import static android.R.attr.id;
+import static com.example.zrs.visigoth.SplashScreen.PREFS_NAME;
+
 public class AuthPaymentActivity extends AppCompatActivity {
     public static final String PREFS_NAME = "CoreSkillsPrefsFile";
 
@@ -668,10 +671,61 @@ public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
     }
 
     public void makeTransation(){
-        //SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-        //String accountID = settings.getString("accountID", "");
-        //Log.i("zzz",accountID);
-//        APIInterface apiService = APIClient.getClient().create(APIInterface.class);
-//        Call<Example> call = apiService.transfer("medium", mPayee, mAmount, "2017-06-08", "description");
+        String medium = "medium";
+        String date = "2017-06-08";
+        String description = "description";
+
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        String accountID = settings.getString("accountID", "");
+
+        //Log.i("zzz",id);
+        //APIInterface apiService = APIClient.getClient().create(APIInterface.class);
+        //Call<Example> call = apiService.transfer(medium, id, amount, date, description);
+        String url = "http://api.reimaginebanking.com/accounts/" + id +"/transfers?key=67d9a238a69baa7daee2a3a22bd1ee75";
+        String json = "{" +
+                "  \"medium\": \"balance\"," +
+                "  \"payee_id\": \"" + accountID + "\"," +
+                "  \"amount\": " + mAmount +"," +
+                "  \"transaction_date\": \"2017-06-08\"," +
+                "  \"description\": \"string\"" +
+                "}";
+
+        Log.i("zzz",json);
+
+        new RetrieveFeedTask().execute(url, json);
+
+
+    }
+
+    class RetrieveFeedTask extends AsyncTask<String, String, Void> {
+
+
+
+        private Exception exception;
+
+        String url = "http://api.reimaginebanking.com/accounts/" + id +"/transfers?key=67d9a238a69baa7daee2a3a22bd1ee75";
+        String json = "{" +
+                "  \"medium\": \"balance\"," +
+                "  \"payee_id\": \"5938c93bceb8abe2425178e5\"," +
+                "  \"amount\": 3," +
+                "  \"transaction_date\": \"2017-06-08\"," +
+                "  \"description\": \"string\"" +
+                "}";
+
+        protected Void doInBackground(String... urls) {
+            APIClient apiClient = new APIClient();
+
+            try {
+                apiClient.post(urls[0],urls[1]);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        protected void onPostExecute() {
+            // TODO: check this.exception
+            // TODO: do something with the feed
+        }
     }
 }
