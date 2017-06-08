@@ -31,8 +31,12 @@ public interface APIInterface {
 //    Call<Alcohol> adddrink(@Field String id, @Field String day, @Field Double beer, @Field Double wine, @Field Double shots, @Field Double liquor, @Field Double money);
 
     @FormUrlEncoded
-    @POST("/transfers?key=67d9a238a69baa7daee2a3a22bd1ee75")
+    @POST("transfers?key=67d9a238a69baa7daee2a3a22bd1ee75")
     Call<Example> transfer(@Field("medium") String medium, @Field("payee_id") String payee_id, @Field("amount") String amount, @Field("transaction_date") String transaction_date, @Field("description") String description);
+
+    /*@FormUrlEncoded
+    @GET("5938c8f1ceb8abe2425178e1/transfers?key=67d9a238a69baa7daee2a3a22bd1ee75")
+    Call<>*/
 
 
 }

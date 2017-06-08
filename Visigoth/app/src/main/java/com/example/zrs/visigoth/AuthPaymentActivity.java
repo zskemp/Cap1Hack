@@ -668,10 +668,10 @@ public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
     }
 
     public void makeTransation(){
-        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-        String accountID = settings.getString("accountID", "");
-        Log.i("zzz",accountID);
-        APIInterface apiService = APIClient.getClient(accountID).create(APIInterface.class);
-        Call<Example> call = apiService.transfer("medium", mPayee, mAmount, "2017-06-08", "description");
+        //SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        //String accountID = settings.getString("accountID", "");
+        //Log.i("zzz",accountID);
+//        APIInterface apiService = APIClient.getClient().create(APIInterface.class);
+//        Call<Example> call = apiService.transfer("medium", mPayee, mAmount, "2017-06-08", "description");
     }
 }
