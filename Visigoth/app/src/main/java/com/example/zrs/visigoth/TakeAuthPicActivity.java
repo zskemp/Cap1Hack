@@ -3,7 +3,10 @@ package com.example.zrs.visigoth;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
 import android.graphics.SurfaceTexture;
 import android.hardware.camera2.CameraAccessException;
@@ -43,6 +46,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class TakeAuthPicActivity extends AppCompatActivity {
+    public static final String PREFS_NAME = "CoreSkillsPrefsFile";
+
     private static final String TAG = "TakeAuthPicActivity";
     private Button takePictureButton;
     private TextureView textureView;
@@ -179,6 +184,12 @@ public class TakeAuthPicActivity extends AppCompatActivity {
                         byte[] bytes = new byte[buffer.capacity()];
                         buffer.get(bytes);
                         save(bytes);
+
+
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                        //WHERE WE WOULD PUSH TO API
+
+
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     } catch (IOException e) {
@@ -208,7 +219,7 @@ public class TakeAuthPicActivity extends AppCompatActivity {
                     super.onCaptureCompleted(session, request, result);
                     //API Call
                     Toast.makeText(TakeAuthPicActivity.this, "Saved:" + file, Toast.LENGTH_SHORT).show();
-                    createCameraPreview();
+                    //createCameraPreview();
                     //Move to next thing
                     Intent intent = new Intent(TakeAuthPicActivity.this, TakeAuthVoiceActivity.class);
                     startActivity(intent);
@@ -231,6 +242,7 @@ public class TakeAuthPicActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
     protected void createCameraPreview() {
         try {
             SurfaceTexture texture = textureView.getSurfaceTexture();

@@ -2,6 +2,9 @@
     <string name="app_name">Visigoth</string>
     <string name="title_activity_login">Sign in</string>
 
+    <string name="subscription_key">d67270f63c054b2ebf4b237c97859736</string>
+    <string name="endpoint">https://westcentralus.api.cognitive.microsoft.com/face/v1.0</string>
+
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>
@@ -18,4 +21,5 @@
     <string name="title_activity_payment_request">PaymentRequestActivity</string>
     <string name="title_activity_auth_payment">AuthPaymentActivity</string>
     <string name="title_activity_take_auth_voice">TakeAuthVoiceActivity</string>
+    <string name="title_activity_face_verification">FaceVerification</string>
 </resources>

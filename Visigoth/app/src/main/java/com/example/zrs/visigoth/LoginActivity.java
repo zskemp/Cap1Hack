@@ -362,7 +362,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         editor.putString("username", mEmail);
                         editor.putString("password", mPassword);
                         editor.putString("accountID", mAccountID);
-                        //editor.commit()
+                        editor.commit();
 
                         //After making the new account move to take a picture
                         Intent intent = new Intent(LoginActivity.this, TakeAuthPicActivity.class);
@@ -373,7 +373,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
-                    Toast toast = Toast.makeText(getApplicationContext(), "Server failed to return", 4);
+                    Toast toast = Toast.makeText(getApplicationContext(), "Server failed to return", Toast.LENGTH_SHORT);
                     toast.show();
                 }
             });

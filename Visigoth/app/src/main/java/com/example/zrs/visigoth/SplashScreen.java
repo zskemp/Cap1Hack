@@ -30,7 +30,6 @@ public class SplashScreen extends AppCompatActivity {
                         Intent intent = new Intent(SplashScreen.this, LoginActivity.class);
                         startActivity(intent);
                     } else {
-                        Log.i("HEY", "Why am I here");
                         Intent intent = new Intent(SplashScreen.this, HomeActivity.class);
                         startActivity(intent);
                     }
