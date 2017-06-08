@@ -365,7 +365,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         //editor.commit()
 
                         //After making the new account move to take a picture
-                        Intent intent = new Intent(LoginActivity.this, TakeAuthVoiceActivity.class);
+                        Intent intent = new Intent(LoginActivity.this, TakeAuthPicActivity.class);
                         startActivity(intent);
                     }
 
