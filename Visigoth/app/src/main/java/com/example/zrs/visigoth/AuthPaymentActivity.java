@@ -4,6 +4,7 @@ import android.*;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -64,7 +65,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import retrofit2.Call;
+
 public class AuthPaymentActivity extends AppCompatActivity {
+    public static final String PREFS_NAME = "CoreSkillsPrefsFile";
 
     private static final String TAG = "TakeAuthPicActivity";
     private Button takePictureButton;
@@ -140,6 +144,7 @@ public class AuthPaymentActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Perform API call to authenticate
                 verify(v);
+                makeTransation();
             }
         });
 
@@ -658,5 +663,13 @@ public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
             }
         }
         return inSampleSize;
+    }
+
+    public void makeTransation(){
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        String accountID = settings.getString("accountID", "");
+        Log.i("zzz",accountID);
+        APIInterface apiService = APIClient.getClient(accountID).create(APIInterface.class);
+        Call<Example> call = apiService.transfer("medium", mPayee, mAmount, "2017-06-08", "description");
     }
 }
