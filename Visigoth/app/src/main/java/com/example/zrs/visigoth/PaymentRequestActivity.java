@@ -94,7 +94,7 @@ public class PaymentRequestActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError firebaseError) {
                 post.add(new People(""));
 
-                Toast toast = Toast.makeText(getApplicationContext(), "Failed to connect to server", 4);
+                Toast toast = Toast.makeText(getApplicationContext(), "Failed to connect to server", Toast.LENGTH_SHORT);
                 toast.show();
             }
         });

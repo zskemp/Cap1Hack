@@ -92,6 +92,8 @@ public class AuthPaymentActivity extends AppCompatActivity {
     private String mPayee;
     private String mAmount;
 
+    private ImageView pic0;
+
     // The URI of photo taken with camera
     private Uri mUriPhotoTaken;
 
@@ -153,6 +155,7 @@ public class AuthPaymentActivity extends AppCompatActivity {
             }
         });
 
+        pic0 = (ImageView)findViewById(R.id.picture0);
 
         //makeAPICall();
         setSecondPic();
@@ -162,29 +165,39 @@ public class AuthPaymentActivity extends AppCompatActivity {
 
 
     public void setSecondPic() {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+
         switch (mPayee) {
             case "Zach":
-                Bitmap im = BitmapFactory.decodeResource(getResources(), R.drawable.zach);
-                mBitmap0 = im;
+                pic0.setImageBitmap(decodeSampledBitmapFromResource(getResources(), R.drawable.zach, 100, 100));
+                Bitmap im1 = decodeSampledBitmapFromResource(getResources(), R.drawable.zach, 100, 100);
+                mBitmap0 = im1;
                 break;
             case "Kyle":
-                Bitmap im2 = BitmapFactory.decodeResource(getResources(), R.drawable.selector_row);
+                pic0.setImageBitmap(decodeSampledBitmapFromResource(getResources(), R.drawable.zach, 100, 100));
+                Bitmap im2 = decodeSampledBitmapFromResource(getResources(), R.drawable.zach, 100, 100);
                 mBitmap0 = im2;
                 break;
             case "Ben":
-                Bitmap im3 = BitmapFactory.decodeResource(getResources(), R.drawable.selector_row);
+                pic0.setImageBitmap(decodeSampledBitmapFromResource(getResources(), R.drawable.zach, 100, 100));
+                Bitmap im3 = decodeSampledBitmapFromResource(getResources(), R.drawable.zach, 100, 100);
                 mBitmap0 = im3;
                 break;
             case "Riyu":
-                Bitmap im4 = BitmapFactory.decodeResource(getResources(), R.drawable.selector_row);
+                pic0.setImageBitmap(decodeSampledBitmapFromResource(getResources(), R.drawable.zach, 100, 100));
+                Bitmap im4 = decodeSampledBitmapFromResource(getResources(), R.drawable.zach, 100, 100);
                 mBitmap0 = im4;
                 break;
             default:
-                Bitmap im5 = BitmapFactory.decodeResource(getResources(), R.drawable.zach);
+                pic0.setImageBitmap(decodeSampledBitmapFromResource(getResources(), R.drawable.zach, 100, 100));
+                Bitmap im5 = decodeSampledBitmapFromResource(getResources(), R.drawable.zach, 100, 100);
                 mBitmap0 = im5;
                 break;
         }
 
+        //pic0.setImageBitmap(mBitmap0);
+//        pic0.setImageBitmap(decodeSampledBitmapFromResource(getResources(), R.drawable.zach, 100, 100));
 
     }
 
@@ -609,4 +622,41 @@ public class AuthPaymentActivity extends AppCompatActivity {
 //
 //        Toast.makeText(getApplicationContext(), mPayee + "  " + mAmount, Toast.LENGTH_SHORT).show();
 //    }
+public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
+                                                     int reqWidth, int reqHeight) {
+
+    // First decode with inJustDecodeBounds=true to check dimensions
+    final BitmapFactory.Options options = new BitmapFactory.Options();
+    options.inJustDecodeBounds = true;
+    BitmapFactory.decodeResource(res, resId, options);
+
+    // Calculate inSampleSize
+    options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+
+    // Decode bitmap with inSampleSize set
+    options.inJustDecodeBounds = false;
+    return BitmapFactory.decodeResource(res, resId, options);
+}
+
+    public static int calculateInSampleSize(
+            BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) >= reqHeight
+                    && (halfWidth / inSampleSize) >= reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+        return inSampleSize;
+    }
 }
