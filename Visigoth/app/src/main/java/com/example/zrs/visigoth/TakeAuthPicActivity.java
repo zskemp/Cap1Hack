@@ -228,7 +228,6 @@ public class TakeAuthPicActivity extends AppCompatActivity {
                         output.write(bytes);
 
                         FileInputStream fileInputStream = new FileInputStream(file);
-
                         detectAndFrame(BitmapFactory.decodeStream(fileInputStream));
 
                     } finally {

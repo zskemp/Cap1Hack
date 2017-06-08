@@ -30,6 +30,14 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +55,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private static final int REQUEST_READ_CONTACTS = 0;
 
     public static final String PREFS_NAME = "CoreSkillsPrefsFile";
+    private DatabaseReference mDatabase;
 
     /**
      * A dummy authentication store containing known user names and passwords.
@@ -74,6 +83,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
 
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -200,7 +212,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
-        return email.contains("@");
+        return true;
     }
 
     private boolean isPasswordValid(String password) {
@@ -317,34 +329,54 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
+            DatabaseReference users = mDatabase.child("users");
 
-            try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
-            }
+            //one time check of the mDatabase object
+            users.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot snapshot) {
 
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
+                    Boolean verified_user = false;
+
+                    if (snapshot.hasChild(mEmail)) {
+                        if (snapshot.child(mEmail).child("password").getValue().toString().equals(mPassword)) {
+
+                            verified_user = true;
+                        }
+                        else{
+                            Toast toast = Toast.makeText(getApplicationContext(), snapshot.child(mEmail).child("password").getValue().toString(), 4);
+                            toast.show();
+                        }
+                    }
+                    else{
+                        verified_user = true;
+                        mDatabase.child("users").child(mEmail).child("name").setValue(mEmail);
+                        mDatabase.child("users").child(mEmail).child("password").setValue(mPassword);
+                        mDatabase.child("users").child(mEmail).child("c1id").setValue(mAccountID);
+                    }
+
+                    if (verified_user) {
+                        //Store the information in prefs
+                        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+                        SharedPreferences.Editor editor = settings.edit();
+                        editor.putString("username", mEmail);
+                        editor.putString("password", mPassword);
+                        editor.putString("accountID", mAccountID);
+                        //editor.commit()
+
+                        //After making the new account move to take a picture
+                        Intent intent = new Intent(LoginActivity.this, TakeAuthPicActivity.class);
+                        startActivity(intent);
+                    }
+
                 }
-            }
 
-            // TODO: register the new account here.
-
-            //Store the information in prefs
-            SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-            SharedPreferences.Editor editor = settings.edit();
-            editor.putString("username", mEmail);
-            editor.putString("password", mPassword);
-            editor.putString("accountID", mAccountID);
-
-            //After making the new account move to take a picture
-            Intent intent = new Intent(LoginActivity.this, TakeAuthPicActivity.class);
-            startActivity(intent);
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "Server failed to return", 4);
+                    toast.show();
+                }
+            });
 
             return true;
         }
