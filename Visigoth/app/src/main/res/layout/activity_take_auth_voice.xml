@@ -2,9 +2,11 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorPrimary"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.zrs.visigoth.TakeAuthVoiceActivity">
+
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -18,30 +20,35 @@
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
+
+
     </android.support.design.widget.AppBarLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
 
-        <RecordButton
-            android:id="@+id/rec_button"
+        <Button
+            android:id="@+id/btn1"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
+
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="146dp"
+            android:background="@drawable/mic3" />
+
+        <Button
+            android:id="@+id/submintbtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:onClick="dispatchToHome"
-            android:text="Record" />
-
-        <PLayButton
-            android:id="@+id/play_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:onClick="dispatchToHome"
-            android:text="Play" />
-    </LinearLayout>
+            android:layout_below="@+id/btn1"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
+            android:padding="20dp"
+            android:text="Submit Audio"
+            android:textSize="25sp" />
+    </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>
