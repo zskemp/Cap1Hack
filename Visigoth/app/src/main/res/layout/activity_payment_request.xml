@@ -31,7 +31,7 @@
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight=".8"
+        android:layout_weight=".75"
         android:orientation="vertical">
 
         <android.support.v7.widget.RecyclerView
@@ -47,8 +47,9 @@
         android:id="@+id/moneyAmountView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight=".1"
+        android:layout_weight=".15"
         android:orientation="horizontal"
+        android:background="@color/white"
         android:divider="?android:dividerHorizontal"
         android:showDividers="middle">
 
@@ -58,6 +59,7 @@
             android:id="@+id/amountTitle"
             android:gravity="center"
             android:text="Amount: "
+            android:textColor="@color/textDark"
             android:textSize="26sp"/>
 
         <EditText
@@ -82,8 +84,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/selectPayer"
+            android:background="@color/colorPrimary"
             android:text="SELECT"
-            android:textStyle="bold"/>
+            android:textColor="@color/colorAccent"
+            android:textSize="26sp" />
 
 
     </LinearLayout>

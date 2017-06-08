@@ -179,7 +179,7 @@ public class AuthPaymentActivity extends AppCompatActivity {
                 Bitmap im2 = decodeSampledBitmapFromResource(getResources(), R.drawable.zach, 100, 100);
                 mBitmap0 = im2;
                 break;
-            case "Ben":
+            case "ben":
                 pic0.setImageBitmap(decodeSampledBitmapFromResource(getResources(), R.drawable.ben, 100, 100));
                 Bitmap im3 = decodeSampledBitmapFromResource(getResources(), R.drawable.ben, 100, 100);
                 mBitmap0 = im3;

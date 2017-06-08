@@ -16,19 +16,22 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_alignParentTop="true"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:scaleType="centerCrop"
-            android:src="@mipmap/ic_launcher" />
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:tint="@android:color/holo_green_dark"
+            android:src="@drawable/money" />
 
         <TextView
             android:id="@+id/textViewName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/imageView"
+            android:layout_alignParentTop="true"
             android:maxLines="3"
-            android:padding="8dp"
+            android:layout_marginLeft="10dp"
             android:text="Error"
             android:textColor="#222"
             android:textStyle="bold"
@@ -39,11 +42,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewName"
+            android:layout_centerHorizontal="true"
             android:maxLines="3"
             android:padding="8dp"
+            android:layout_marginTop="20dp"
             android:text="Please Let the Developers Know If You See This"
             android:textColor="#666"
-            android:textSize="14dp" />
+            android:textSize="26dp" />
 
     </RelativeLayout>
 
