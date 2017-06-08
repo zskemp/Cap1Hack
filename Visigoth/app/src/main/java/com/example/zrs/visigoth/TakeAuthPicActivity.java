@@ -221,7 +221,7 @@ public class TakeAuthPicActivity extends AppCompatActivity {
                     Toast.makeText(TakeAuthPicActivity.this, "Saved:" + file, Toast.LENGTH_SHORT).show();
                     //createCameraPreview();
                     //Move to next thing
-                    Intent intent = new Intent(TakeAuthPicActivity.this, TakeAuthVoiceActivity.class);
+                    Intent intent = new Intent(TakeAuthPicActivity.this, HomeActivity.class);
                     startActivity(intent);
                 }
             };
