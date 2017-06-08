@@ -2,6 +2,7 @@ package com.example.zrs.visigoth;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
@@ -24,8 +25,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import retrofit2.Call;
 
 import static java.security.AccessController.getContext;
 
@@ -37,6 +46,9 @@ public class PaymentRequestActivity extends AppCompatActivity {
     Button mSubmit;
     DatabaseReference mDatabase;
     ArrayList<People> post = new ArrayList<>();
+
+    String id;
+    String amount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +93,7 @@ public class PaymentRequestActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         // Perform action on click
                         final String payee = adapter.getSelected();
-                        final String amount = mAmount.getText().toString();
+                        amount = mAmount.getText().toString();
 
                         mDatabase = FirebaseDatabase.getInstance().getReference();
                         DatabaseReference users = mDatabase.child("users");
@@ -90,12 +102,13 @@ public class PaymentRequestActivity extends AppCompatActivity {
                         users.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot snapshot) {
-                                String id = snapshot.child(payee).child("c1id").getValue().toString();
+                                id = snapshot.child(payee).child("c1id").getValue().toString();
 
                                 Intent intent = new Intent(PaymentRequestActivity.this, AuthPaymentActivity.class);
                                 intent.putExtra("PERSON_TO_PAY", payee);
                                 intent.putExtra("AMOUNT", amount);
                                 intent.putExtra("ID", id);
+                                makeTransation();
                                 startActivity(intent);
                             }
 
@@ -119,5 +132,57 @@ public class PaymentRequestActivity extends AppCompatActivity {
         });
 
     }
+    public void makeTransation(){
+        String medium = "medium";
+        String date = "2017-06-08";
+        String description = "description";
 
+        //SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        //String accountID = settings.getString("accountID", "");
+        //Log.i("zzz",id);
+        //APIInterface apiService = APIClient.getClient().create(APIInterface.class);
+        //Call<Example> call = apiService.transfer(medium, id, amount, date, description);
+        String url = "http://api.reimaginebanking.com/accounts/5938c8f1ceb8abe2425178e1/transfers?key=67d9a238a69baa7daee2a3a22bd1ee75";
+        String json = "{" +
+                "  \"medium\": \"balance\"," +
+                "  \"payee_id\": \"5938c93bceb8abe2425178e5\"," +
+                "  \"amount\": 3," +
+                "  \"transaction_date\": \"2017-06-08\"," +
+                "  \"description\": \"string\"" +
+                "}";
+
+        new RetrieveFeedTask().execute(url, json);
+
+
+    }
+
+    class RetrieveFeedTask extends AsyncTask<String, String, Void> {
+
+        private Exception exception;
+
+        String url = "http://api.reimaginebanking.com/accounts/" + "s5938c8f1ceb8abe2425178e1" +"/transfers?key=67d9a238a69baa7daee2a3a22bd1ee75";
+        String json = "{" +
+                "  \"medium\": \"balance\"," +
+                "  \"payee_id\": \"5938c93bceb8abe2425178e5\"," +
+                "  \"amount\": 3," +
+                "  \"transaction_date\": \"2017-06-08\"," +
+                "  \"description\": \"string\"" +
+                "}";
+
+        protected Void doInBackground(String... urls) {
+            APIClient apiClient = new APIClient();
+
+            try {
+                apiClient.post(urls[0],urls[1]);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        protected void onPostExecute() {
+            // TODO: check this.exception
+            // TODO: do something with the feed
+        }
+    }
 }
