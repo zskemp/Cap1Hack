@@ -2,8 +2,10 @@ package com.example.zrs.visigoth;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.health.SystemHealthManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
@@ -26,12 +28,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private ArrayList<Transaction> transactions;
+    public static ArrayList<Transaction> transactions;
+//    private ArrayList<Transaction> transactions;
     private DatabaseReference mDatabase;
     String transaction_name;
 
@@ -68,9 +72,21 @@ public class HomeActivity extends AppCompatActivity {
 
     //Create Cards for RecyclerView
     public static ArrayList<Transaction> initializeTransactions() {
-        ArrayList<Transaction> transactions = new ArrayList<>();
+        transactions = new ArrayList<>();
 
         // ToDo: Change temp data with data from API call
+        String url = "http://api.reimaginebanking.com/accounts/5938c8f1ceb8abe2425178e1/transfers?key=67d9a238a69baa7daee2a3a22bd1ee75";
+
+       // String url = "http://api.reimaginebanking.com/accounts/5938c8f1ceb8abe2425178e1/transfers?key=67d9a238a69baa7daee2a3a22bd1ee75";
+        String json = "{" +
+                "  \"medium\": \"balance\"," +
+                "  \"payee_id\": \"5938c93bceb8abe2425178e5\"," +
+                "  \"amount\": 3," +
+                "  \"transaction_date\": \"2017-06-08\"," +
+                "  \"description\": \"string\"" +
+                "}";
+
+        new RetrieveFeedTask().execute(url);
         //FAKE DATA: USE API CALL
         transactions.add(new Transaction("John", "$50.49", R.drawable.money));
         transactions.add(new Transaction("Zach", "$44.32", R.drawable.receipt));
@@ -80,6 +96,37 @@ public class HomeActivity extends AppCompatActivity {
 
 
         return transactions;
+    }
+
+    private static class RetrieveFeedTask extends AsyncTask<String, Void, Void> {
+
+        private Exception exception;
+
+        String url = "http://api.reimaginebanking.com/accounts/" + "s5938c8f1ceb8abe2425178e1" + "/transfers?key=67d9a238a69baa7daee2a3a22bd1ee75";
+        String json = "{" +
+                "  \"medium\": \"balance\"," +
+                "  \"payee_id\": \"5938c93bceb8abe2425178e5\"," +
+                "  \"amount\": 3," +
+                "  \"transaction_date\": \"2017-06-08\"," +
+                "  \"description\": \"string\"" +
+                "}";
+
+        protected Void doInBackground(String... urls) {
+            APIClient_Get apiClient = new APIClient_Get();
+
+            try {
+                String response = apiClient.run(urls[0]);
+                System.out.print(response);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        protected void onPostExecute() {
+            // TODO: check this.exception
+            // TODO: do something with the feed
+        }
     }
 
     public String capitalone_id_to_name(String id) {
@@ -111,5 +158,4 @@ public class HomeActivity extends AppCompatActivity {
 
         return transaction_name;
     }
-
 }
