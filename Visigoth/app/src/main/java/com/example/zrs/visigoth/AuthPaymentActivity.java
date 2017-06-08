@@ -48,6 +48,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.microsoft.projectoxford.face.FaceServiceClient;
+import com.microsoft.projectoxford.face.FaceServiceRestClient;
 import com.microsoft.projectoxford.face.contract.Face;
 import com.microsoft.projectoxford.face.contract.VerifyResult;
 
@@ -112,7 +113,7 @@ public class AuthPaymentActivity extends AppCompatActivity {
 
     private FaceServiceClient faceServiceClient =
             new FaceServiceRestClient("your subscription key");
-    ??
+
     // The IDs of the two faces to be verified.
     private UUID mFaceId0;
     private UUID mFaceId1;
@@ -216,11 +217,11 @@ public class AuthPaymentActivity extends AppCompatActivity {
     private void detect(Bitmap bitmap, int index) {
         // Put the image into an input stream for detection.
         ByteArrayOutputStream output = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, output);
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(output.toByteArray());
+//        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, output);
+//        ByteArrayInputStream inputStream = new ByteArrayInputStream(output.toByteArray());
 
         // Start a background task to detect faces in the image.
-        new AuthPaymentActivity.DetectionTask(index).execute(inputStream);
+//        new AuthPaymentActivity.DetectionTask(index).execute(inputStream);
     }
 
     // Called when the "Verify" button is clicked.
