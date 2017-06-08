@@ -43,6 +43,15 @@
                 android:value="com.example.zrs.visigoth.HomeActivity" />
         </activity>
         <activity
+            android:name=".FaceVerificationActivity"
+            android:label="@string/title_activity_face_verification"
+            android:parentActivityName=".PaymentRequestActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.zrs.visigoth.PaymentRequestActivity" />
+        </activity>
+        <activity
             android:name=".AuthPaymentActivity"
             android:label="@string/title_activity_auth_payment"
             android:parentActivityName=".PaymentRequestActivity"
